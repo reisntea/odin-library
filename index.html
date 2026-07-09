@@ -5,8 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
     <script src="script.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <h1>My Library</h1>
+    <p>Books are added to the shelf. Hover over a book to see its info.</p>
+    <button>Add Book</button>
+
+    <div id="book-container">
+        <div id="books"></div>
+        <div id="shelf-design">
+            <div id="shelf-top"></div>
+            <div id="shelf-bottom"></div>
+        </div>
+    </div>
+
+    <div id="info-container">
+        <section class="info-border">
+            <div>
+                <div class="info-title">Info</div>
+                <div class="info-contents"></div>
+            </div>
+        </section>
+    </div>
     
 </body>
 </html>

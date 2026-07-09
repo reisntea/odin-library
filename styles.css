@@ -1,0 +1,49 @@
+#book-container {
+    margin: 0;
+    padding: 0;
+    height: 300px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#books {
+    margin: 20px 20px 0px 20px;
+    height: auto;
+    border: 1px solid black;
+    flex-grow: 1;
+
+    display: flex;
+}
+
+#shelf-top {
+    border-bottom: 3px solid black;
+}
+
+#shelf-bottom {
+    max-width: 85%;
+    height: 20px;
+    border-left: 3px solid black;
+    border-right: 3px solid black;
+
+    margin: auto;
+}
+
+#info-container section {
+    border: 2px solid black;
+    margin-top: 1em;
+}
+
+.info-border > div {
+    padding: 0 3px;
+    height: 100px;
+    margin-top: -0.7em;
+    
+}
+.info-title {
+    background: white none repeat scroll 0 0;
+    display: inline-block;
+    padding: 0 2px;
+    margin-left: 3em;
+}
