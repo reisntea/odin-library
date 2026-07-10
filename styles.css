@@ -80,3 +80,7 @@ body {
 #info-text {
     margin-top: 10px;
 }
+
+#info-contents > button {
+    margin-right: 20px;
+}

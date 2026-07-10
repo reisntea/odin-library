@@ -1,5 +1,6 @@
 const myLibrary = [];
 const bookshelf = document.querySelector("#books");
+const infoContent = document.querySelector("#info-contents");
 const infoText = document.querySelector("#info-text");
 
 function Book(title, author, pages, read) {
@@ -23,7 +24,19 @@ Book.prototype.info = function() {
 }
 
 function addBookToLibrary (title, author, pages, read) {
-    myLibrary.push(new Book(title, author, pages, read))
+    myLibrary.push(new Book(title, author, pages, read));
+}
+
+function changeReadStatus (Book) {
+    Book.read ? Book.read = false : Book.read = true;
+    updateInfoDisplay(Book);
+}
+
+function removeBook (Book) {
+    myLibrary.splice(myLibrary.indexOf(Book), 1);
+    infoText.textContent = "";
+    infoContent.querySelectorAll('button').forEach(button => button.remove());
+    updateLibraryDisplay();
 }
 
 addBookToLibrary("waldo", "some guy", 290, false);
@@ -33,6 +46,7 @@ addBookToLibrary("Of Mice and Men", "some guy", 400, false);
 updateLibraryDisplay();
 
 function updateLibraryDisplay () {
+    bookshelf.replaceChildren();
     let bookWidth = 0;
     for (Book of myLibrary) {
         const book = document.createElement("div");
@@ -49,7 +63,6 @@ function updateLibraryDisplay () {
 
         book.setAttribute("class", "book");
         book.style.minWidth = `${bookWidth}%`;
-        book.style.height = Math.floor(Math.random() * (100 - 60) + 55) + "%";
         book.setAttribute("data-id", `${Book.id}`);
 
         bookTitle.textContent = Book.title;
@@ -63,13 +76,42 @@ let currentId = 0;
 let text = "";
 
 document.querySelector('#books').addEventListener('mouseover', (event) => {
-  if (event.target.matches('.book') && currentId != event.target.getAttribute('data-id')) {
-    console.log('Element hovered via delegation:', event.target.getAttribute('data-id'));
+    if (event.target.matches('.book') && currentId != event.target.getAttribute('data-id')) {
+        currentId = event.target.getAttribute('data-id');
+        updateInfoDisplay(myLibrary.find(({id}) => id === event.target.getAttribute('data-id')));
+    }
+});
 
-    currentId = event.target.getAttribute('data-id');
-    text = myLibrary.find(({id}) => id === event.target.getAttribute('data-id')).info();
-    console.log(text);
+function updateInfoDisplay (Book) {
+    infoContent.querySelectorAll('button').forEach(button => button.remove());
+    text = Book.info();
+    const readButton = document.createElement("button");
+    const removeButton = document.createElement("button");
+
+    readButton.setAttribute("id", "change-read");
+    readButton.setAttribute("data-id", `${Book.id}`);
+    removeButton.setAttribute("id", "remove");
+    removeButton.setAttribute("data-id", `${Book.id}`);
 
     infoText.textContent = text;
-  }
+    readButton.textContent = "Change Read Status";
+    removeButton.textContent = "Remove";
+
+    infoContent.appendChild(readButton);
+    infoContent.appendChild(removeButton);
+}
+
+infoContent.addEventListener('click', (event) => {
+    let target = event.target;
+
+    switch(target.id) {
+        case 'change-read':
+            console.log('change read item was clicked');
+            changeReadStatus(myLibrary.find(({id}) => id === event.target.getAttribute('data-id')));
+            break;
+        case 'remove':
+            console.log('remove item was clicked');
+            removeBook(myLibrary.find(({id}) => id === event.target.getAttribute('data-id')));
+            break;
+    }
 });
