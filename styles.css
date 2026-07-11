@@ -82,5 +82,13 @@ body {
 }
 
 #info-contents > button {
+    color: rgb(95, 95, 95);
     margin-right: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
 }
