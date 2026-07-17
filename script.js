@@ -12,37 +12,30 @@ const authorInput = document.querySelector("#author");
 const pagesInput = document.querySelector("#pages");
 const readInput = document.querySelector("#read");
 
-
-function Book(title, author, pages, read) {
-    if (!new.target) {
-        throw Error("You must use the 'new' operator to call the constructor");
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+        this.id = crypto.randomUUID();
     }
 
-    if (typeof title !== "string" || typeof author !== "string" || typeof pages !== "number" || typeof read !== "boolean") {
-        throw Error("Wrong value type for one of the properties");
-    }
-
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.id = crypto.randomUUID();
-}
-
-Book.prototype.info = function() {
+    info() {
         return (this.read) ? `${this.title} by ${this.author}, ${this.pages} pages, has been read` : `${this.title} by ${this.author}, ${this.pages} pages, not read yet`;
-}
+    }
 
-Book.prototype.changeReadStatus = function() {
-    this.read ? this.read = false : this.read = true;
-    updateInfoDisplay(this);
-}
+    changeReadStatus() {
+        this.read ? this.read = false : this.read = true;
+        updateInfoDisplay(this);
+    }
 
-Book.prototype.removeBook = function() {
-    myLibrary.splice(myLibrary.indexOf(this), 1);
-    infoText.textContent = "";
-    infoContent.querySelectorAll('button').forEach(button => button.remove());
-    updateLibraryDisplay();
+    removeBook() {
+        myLibrary.splice(myLibrary.indexOf(this), 1);
+        infoText.textContent = "";
+        infoContent.querySelectorAll('button').forEach(button => button.remove());
+        updateLibraryDisplay();
+    }
 }
 
 function addBookToLibrary (title, author, pages, read) {
